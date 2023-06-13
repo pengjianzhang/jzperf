@@ -90,7 +90,8 @@ static int dpdk_set_socket_mem(struct config *cfg, char *socket_mem, char *file_
 
 static int dpdk_eal_init(struct config *cfg, char *argv0)
 {
-    int argc = 4;
+    #define EAL_BASIC_ARGC  6
+    int argc = EAL_BASIC_ARGC;
     char lcores[2048] = "--lcores=";
 #if RTE_VERSION >= RTE_VERSION_NUM(20, 0, 0, 0)
     char flag_pci[] = "-a";
@@ -99,7 +100,11 @@ static int dpdk_eal_init(struct config *cfg, char *argv0)
 #endif
     char socket_mem[64] = "";
     char file_prefix[64] = "";
-    char *argv[4 + (NETIF_PORT_MAX * PCI_NUM_MAX* 2)] = {argv0, lcores, socket_mem, file_prefix, NULL};
+    char log_eal[] = "--log-level=lib.eal:warning";
+    char log_tel[] = "--log-level=lib.telemetry:error";
+
+    char *argv[EAL_BASIC_ARGC + (NETIF_PORT_MAX * PCI_NUM_MAX* 2)] = {argv0, log_eal, log_tel,
+        lcores, socket_mem, file_prefix, NULL};
 
     if (dpdk_set_socket_mem(cfg, socket_mem, file_prefix) < 0) {
         printf("dpdk_set_socket_mem fail\n");
@@ -110,7 +115,7 @@ static int dpdk_eal_init(struct config *cfg, char *argv0)
     argc += dpdk_append_pci(cfg, argc, argv, flag_pci);
 
     if (rte_eal_init(argc, argv) < 0) {
-        printf("rte_eal_init fail\n");
+        printf("Error: rte_eal_init() fail\n");
         return -1;
     }
 
@@ -120,7 +125,7 @@ static int dpdk_eal_init(struct config *cfg, char *argv0)
 int dpdk_init(struct config *cfg, char *argv0)
 {
     if (dpdk_eal_init(cfg, argv0) < 0) {
-        printf("dpdk_eal_init fail\n");
+        printf("dpdk init fail\n");
         return -1;
     }
 
