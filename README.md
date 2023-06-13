@@ -104,7 +104,7 @@ ierrors 0                  oerrors  0                  imissed  0
 
 ### Start jzperf server
     #jzperf server bind at 6.6.241.27:80,  gateway is 6.6.241.1
-    ./build/jzperf -c test/http/server-cps.conf
+    ./build/jzperf -c conf/server-cps-http.conf
 
 ### Send request from a client
     #the client IP must be in the range of 'client' in the configuration file
@@ -112,12 +112,12 @@ ierrors 0                  oerrors  0                  imissed  0
     curl http://6.6.241.27/
 
 ## Running the tests
-Below example will start a HTTP CPS stress test.
+Below example will start a HTTP CPS test.
     #run jzperf server
-    ./build/jzperf -c test/http/server-cps.conf
+    ./build/jzperf -c conf/server-cps-http.conf
 
     #from another host, run jzperf client
-    ./build/jzperf -c test/http/client-cps.conf
+    ./build/jzperf -c conf/client-cps-http.conf
 
 ## Documentation
  - [wiki](https://github.com/pengjianzhang/jzperf/wiki)

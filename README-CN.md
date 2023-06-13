@@ -103,7 +103,7 @@ ierrors 0                  oerrors  0                  imissed  0
 
 ### 启动jzperf server
     #jzperf server监听6.6.241.27:80, 网关是6.6.241.1
-    ./build/jzperf -c test/http/server-cps.conf
+    ./build/jzperf -c conf/server-cps-http.conf
 
 ### 从客户端发送请求
     #客户端IP必须要在配置文件的'client'范围内
@@ -113,10 +113,10 @@ ierrors 0                  oerrors  0                  imissed  0
 ## 运行测试
 下面的例子运行一个HTTP CPS压力测试。
     #在server端运行jzperf
-    ./build/jzperf -c test/http/server-cps.conf
+    ./build/jzperf -c conf/server-cps-http.conf
 
     #以另一台机器作为client端，运行jzperf
-    ./build/jzperf -c test/http/client-cps.conf
+    ./build/jzperf -c conf/client-cps-http.conf
 
 ## 文档
  - [wiki](https://github.com/pengjianzhang/jzperf/wiki)
